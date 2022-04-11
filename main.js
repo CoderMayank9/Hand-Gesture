@@ -20,11 +20,35 @@ function modelloaded()
 {
 console.log("Model Is Loaded");
 }
-function speak()
+function check() 
 {
-var synth=window.speechSynthesis;
-speakdata1="The first prediction is"+ prediction1;
-speakdata2="And the second prediction is"+ prediction2;
-var utterThis=new SpeechSynthesisUtterance(speakdata1+speakdata2);
-synth.speak(utterThis);
+img=document.getElementById("captured_image");
+Classifier.classify(img,gotresults);
+}
+function gotresults(error,results) 
+{
+if(error)
+{
+console.error(error);
+}
+else 
+{
+console.log(results);
+document.getElementById("result_emotion").innerHTML=results[0].label;
+document.getElementById("result_emotion2").innerHTML=results[1].label;
+prediction1=results[0].label;
+prediction2=results[1].label;
+if(results[0].label=="Amazing")
+{
+document.getElementById("result_emoji").innerHTML="&#128076;";
+}
+if(results[0].label=="Best")
+{
+document.getElementById("result_emoji").innerHTML="&#128077;";
+}
+if(results[0].label=="Victory")
+{
+document.getElementById("result_emoji").innerHTML="&#9996;";
+}
+}
 }
